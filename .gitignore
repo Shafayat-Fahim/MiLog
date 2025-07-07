@@ -1,0 +1,16 @@
+# Ignore MySQL data volume folder (if present locally)
+mysql-data/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore any environment files
+.env
+
+# Ignore composer lock and vendor
+composer.lock
+vendor/
+
+# Ignore node_modules
+node_modules/
