@@ -22,14 +22,14 @@
             <th>ID</th><th>Vehicle</th><th>Odometer</th><th>Fuel (L)</th><th>Date</th><th>Actions</th>
         </tr>
         <?php
-        $result = $conn->query("SELECT * FROM fuel_logs ORDER BY date_added DESC");
+        $result = $conn->query("SELECT * FROM fuel_logs ORDER BY date DESC");
         while ($row = $result->fetch_assoc()) {
             echo "<tr>
                     <td>{$row['id']}</td>
-                    <td>{$row['vehicle_name']}</td>
-                    <td>{$row['odometer_km']}</td>
-                    <td>{$row['fuel_liters']}</td>
-                    <td>{$row['date_added']}</td>
+                    <td>{$row['vehicle_id']}</td>
+                    <td>{$row['odometer']}</td>
+                    <td>{$row['litres']}</td>
+                    <td>{$row['date']}</td>
                     <td>
                         <a href='update.php?id={$row['id']}'>Edit</a> | 
                         <a href='delete.php?id={$row['id']}'>Delete</a>

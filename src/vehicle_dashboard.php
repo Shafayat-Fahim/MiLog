@@ -30,7 +30,7 @@ while ($log = $logs->fetch_assoc()) {
     $fuel_log_data[] = $log;
 
     $total_litres += $log['litres'];
-    $total_cost += $log['litres'] * $log['price_per_litre'];
+    $total_cost += $log['litres'] * $log['fuel_price'];
 
     if ($prev_odo !== null) {
         $distance = $prev_odo - $log['odometer'];
@@ -63,7 +63,7 @@ $best_kmpl = round($best_kmpl, 2);
 <form action="add_fuel_log.php" method="POST">
     <input type="hidden" name="vehicle_id" value="<?= $vehicle_id ?>">
     Odometer: <input type="number" name="odometer" required><br>
-    Price per Litre: <input type="number" step="0.01" name="price_per_litre" required><br>
+    Price per Litre: <input type="number" step="0.01" name="fuel_price" required><br>
     Litres: <input type="number" step="0.01" name="litres"><br>
     Cost (optional): <input type="number" step="0.01" name="cost"><br>
     Fuel Type: <input type="text" name="fuel_type"><br>
@@ -77,16 +77,16 @@ $best_kmpl = round($best_kmpl, 2);
 <ol>
 <?php foreach ($fuel_log_data as $i => $log): ?>
     <li>
-        <?= $log['date'] ?> | <?= $log['odometer'] ?> km | <?= $log['litres'] ?> L @ <?= $log['price_per_litre'] ?>  
+        <?= $log['date'] ?> | <?= $log['odometer'] ?> km | <?= $log['litres'] ?> L @ <?= $log['fuel_price'] ?>  
         - <?= $log['location'] ?> 
         - <?= $log['note'] ?>
         <?php if ($i === 0): ?>
-            <form action="delete_fuel_log.php" method="POST" style="display:inline">
+            <form action="delete.php" method="POST" style="display:inline">
                 <input type="hidden" name="log_id" value="<?= $log['id'] ?>">
                 <input type="hidden" name="vehicle_id" value="<?= $vehicle_id ?>">
                 <input type="submit" value="❌ Delete">
             </form>
-            <a href="update_fuel_log.php?log_id=<?= $log['id'] ?>&vid=<?= $vehicle_id ?>">✏️ Edit</a>
+            <a href="update.php?log_id=<?= $log['id'] ?>&vid=<?= $vehicle_id ?>">✏️ Edit</a>
         <?php endif; ?>
     </li>
 <?php endforeach; ?>
