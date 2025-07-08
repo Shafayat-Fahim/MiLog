@@ -5,14 +5,9 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - ./src:/var/www/html/
+      - ./src:/var/www/html
     depends_on:
       - db
-    environment:
-      MYSQL_HOST: db
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DATABASE: mileage_db
 
   db:
     image: mysql:8.0
@@ -20,12 +15,22 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: mileage_db
+      MYSQL_DATABASE: milog
     ports:
       - "3306:3306"
     volumes:
-      - mysql-data:/var/lib/mysql
-      - ./mysql:/docker-entrypoint-initdb.d
+      - ./mysql/01_users.sql:/docker-entrypoint-initdb.d/01_users.sql
+      - ./mysql/02_vehicles.sql:/docker-entrypoint-initdb.d/02_vehicles.sql
+      - ./mysql/03_fuel_logs.sql:/docker-entrypoint-initdb.d/03_fuel_logs.sql
 
-volumes:
-  mysql-data:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: milog-pma
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - db
