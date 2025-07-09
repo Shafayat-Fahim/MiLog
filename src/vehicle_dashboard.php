@@ -65,7 +65,7 @@ $best_kmpl = round($best_kmpl, 2);
     Odometer: <input type="number" name="odometer" required><br>
     Price per Litre: <input type="number" step="0.01" name="fuel_price" required><br>
     Litres: <input type="number" step="0.01" name="litres"><br>
-    Cost (optional): <input type="number" step="0.01" name="cost"><br>
+    Cost : <input type="number" step="0.01" name="fuel_cost"><br>
     Fuel Type: <input type="text" name="fuel_type"><br>
     Date: <input type="date" name="date" required><br>
     Location: <input type="text" name="location"><br>
