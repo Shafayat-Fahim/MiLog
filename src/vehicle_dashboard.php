@@ -15,7 +15,7 @@ if (!$vehicle) {
     exit;
 }
 
-$stmt = $conn->prepare("SELECT * FROM fuel_logs WHERE vehicle_id = ? ORDER BY date DESC");
+$stmt = $conn->prepare("SELECT * FROM fuel_logs WHERE vehicle_id = ? ORDER BY filled_at DESC");
 $stmt->bind_param("i", $vehicle_id);
 $stmt->execute();
 $logs = $stmt->get_result();
@@ -29,12 +29,12 @@ $fuel_log_data = [];
 while ($log = $logs->fetch_assoc()) {
     $fuel_log_data[] = $log;
 
-    $total_litres += $log['litres'];
-    $total_cost += $log['litres'] * $log['fuel_price'];
+    $total_litres += $log['fuel_liters'];
+    $total_cost += $log['fuel_liters'] * $log['fuel_price'];
 
     if ($prev_odo !== null) {
         $distance = $prev_odo - $log['odometer'];
-        $kmpl = $distance / $log['litres'];
+        $kmpl = $distance / $log['fuel_liters'];
         $total_kmpl += $kmpl;
         $best_kmpl = max($best_kmpl, $kmpl);
         if ($count === 0) $last_kmpl = $kmpl;
@@ -64,10 +64,10 @@ $best_kmpl = round($best_kmpl, 2);
     <input type="hidden" name="vehicle_id" value="<?= $vehicle_id ?>">
     Odometer: <input type="number" name="odometer" required><br>
     Price per Litre: <input type="number" step="0.01" name="fuel_price" required><br>
-    Litres: <input type="number" step="0.01" name="litres"><br>
+    Litres: <input type="number" step="0.01" name="fuel_liters"><br>
     Cost : <input type="number" step="0.01" name="fuel_cost"><br>
     Fuel Type: <input type="text" name="fuel_type"><br>
-    Date: <input type="date" name="date" required><br>
+    Date: <input type="date" name="filled_at" required><br>
     Location: <input type="text" name="location"><br>
     Note: <input type="text" name="note"><br>
     <input type="submit" value="Add Log">
@@ -77,7 +77,7 @@ $best_kmpl = round($best_kmpl, 2);
 <ol>
 <?php foreach ($fuel_log_data as $i => $log): ?>
     <li>
-        <?= $log['date'] ?> | <?= $log['odometer'] ?> km | <?= $log['litres'] ?> L @ <?= $log['fuel_price'] ?>  
+        <?= $log['filled_at'] ?> | <?= $log['odometer'] ?> km | <?= $log['fuel_liters'] ?> L @ <?= $log['fuel_price'] ?>  
         - <?= $log['location'] ?> 
         - <?= $log['note'] ?>
         <?php if ($i === 0): ?>
