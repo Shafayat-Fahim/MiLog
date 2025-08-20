@@ -31,6 +31,7 @@ $stmt->close();
                     <div class="card-actions">
                         <a href="vehicle_dashboard.php?vid=<?= $vehicle['id'] ?>" class="btn">View Logs</a>
                         <a href="delete_vehicle.php?vid=<?= $vehicle['id'] ?>" class="btn btn-danger" onclick="showConfirmModal(event)">Delete</a>
+                        <a href="generate_pdf.php?vid=<?= $vehicle['id'] ?>" class="btn btn-secondary" target="_blank">Download Log</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -103,6 +104,12 @@ $stmt->close();
 .btn-delete:hover { background-color: #b91c1c; }
 .btn-outline { border: 1px solid #d1d5db; background-color: transparent; color: var(--secondary-text); }
 .btn-outline:hover { background-color: #f9fafb; }
+.btn-secondary {
+    background-color: #6b7280;
+}
+.btn-secondary:hover {
+    background-color: #4b5563;
+}
 </style>
 
 <script>

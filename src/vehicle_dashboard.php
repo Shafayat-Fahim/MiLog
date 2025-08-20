@@ -59,7 +59,7 @@ $display_logs = array_reverse($all_logs);
 
     <div class="grid stats-grid">
         <div class="card stat-card">
-            <div class="stat-value">$<?= number_format($total_fuel_cost, 2) ?></div>
+            <div class="stat-value">Tk<?= number_format($total_fuel_cost, 2) ?></div>
             <div class="stat-label">Total Fuel Expenses</div>
         </div>
         <div class="card stat-card">
@@ -127,8 +127,8 @@ $display_logs = array_reverse($all_logs);
                             <tr>
                                 <td><?= htmlspecialchars($log['odometer']) ?> km</td>
                                 <td><?= number_format($log['fuel_liters'], 2) ?> L</td>
-                                <td>$<?= number_format($log['fuel_price'], 2) ?></td>
-                                <td>$<?= number_format($log['fuel_cost'], 2) ?></td>
+                                <td>Tk<?= number_format($log['fuel_price'], 2) ?></td>
+                                <td>Tk<?= number_format($log['fuel_cost'], 2) ?></td>
                                 <td>
                                     <?php if ($index === 0): ?>
                                         <a href="edit_log.php?log_id=<?= $log['id'] ?>" class="action-link">Edit</a>

@@ -79,7 +79,7 @@ $recent_logs_stmt->close();
                 <?php foreach ($vehicles_with_stats as $vehicle): ?>
                     <div class="vehicle-stats-block">
                         <h3 class="vehicle-name"><?= htmlspecialchars($vehicle['name']) ?></h3>
-                        <p><strong>Total Spent:</strong> $<?= number_format($vehicle['stats']['total_spent'], 2) ?></p>
+                        <p><strong>Total Spent:</strong> Tk<?= number_format($vehicle['stats']['total_spent'], 2) ?></p>
                         <p><strong>Avg. Mileage:</strong> <?= $vehicle['stats']['avg_mileage'] ?></p>
                         <p><strong>Last Refuel:</strong> <?= $vehicle['stats']['last_refuel'] ?></p>
                     </div>
@@ -103,7 +103,7 @@ $recent_logs_stmt->close();
                                 <span class="activity-vehicle"><?= htmlspecialchars($log['vehicle_name']) ?></span>
                                 <span class="activity-date"><?= date("M j, Y", strtotime($log['filled_at'])) ?></span>
                             </div>
-                            <div class="activity-cost">$<?= number_format($log['fuel_cost'], 2) ?></div>
+                            <div class="activity-cost">Tk<?= number_format($log['fuel_cost'], 2) ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
