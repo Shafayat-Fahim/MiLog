@@ -19,6 +19,8 @@ $vehicles_result = $vehicles_stmt->get_result();
 $vehicles = $vehicles_result->fetch_all(MYSQLI_ASSOC);
 $vehicles_stmt->close();
 
+$total_vehicles = count($vehicles);
+
 $vehicles_with_stats = [];
 foreach ($vehicles as $vehicle) {
     $logs_stmt = $conn->prepare("SELECT odometer, fuel_liters, fuel_cost, filled_at FROM fuel_logs WHERE vehicle_id = ? ORDER BY filled_at ASC, odometer ASC");
@@ -75,11 +77,16 @@ $recent_logs_stmt->close();
             <div class="card-icon">🚗</div>
             <h2 class="card-title">My Vehicles</h2>
             
+            <div class="stat-highlight">
+                <span class="stat-value"><?= $total_vehicles ?></span>
+                <span class="stat-label">Total Vehicles</span>
+            </div>
+            
             <?php if (count($vehicles_with_stats) > 0): ?>
                 <?php foreach ($vehicles_with_stats as $vehicle): ?>
                     <div class="vehicle-stats-block">
                         <h3 class="vehicle-name"><?= htmlspecialchars($vehicle['name']) ?></h3>
-                        <p><strong>Total Spent:</strong> Tk<?= number_format($vehicle['stats']['total_spent'], 2) ?></p>
+                        <p><strong>Total Spent:</strong> $<?= number_format($vehicle['stats']['total_spent'], 2) ?></p>
                         <p><strong>Avg. Mileage:</strong> <?= $vehicle['stats']['avg_mileage'] ?></p>
                         <p><strong>Last Refuel:</strong> <?= $vehicle['stats']['last_refuel'] ?></p>
                     </div>
@@ -103,7 +110,7 @@ $recent_logs_stmt->close();
                                 <span class="activity-vehicle"><?= htmlspecialchars($log['vehicle_name']) ?></span>
                                 <span class="activity-date"><?= date("M j, Y", strtotime($log['filled_at'])) ?></span>
                             </div>
-                            <div class="activity-cost">Tk<?= number_format($log['fuel_cost'], 2) ?></div>
+                            <div class="activity-cost">$<?= number_format($log['fuel_cost'], 2) ?></div>
                         </div>
                     <?php endforeach; ?>
                 </div>
@@ -111,7 +118,7 @@ $recent_logs_stmt->close();
                 <p class="card-text">No fuel logs have been added yet.</p>
             <?php endif; ?>
             
-            <a href="vehicles.php" class="btn">View All Logs</a>
+            <a href="logs.php" class="btn">View All Logs</a>
         </div>
     </div>
 </div>
@@ -122,6 +129,7 @@ $recent_logs_stmt->close();
 .vehicle-stats-block:first-of-type { margin-top: 1rem; padding-top: 0; border-top: none; }
 .vehicle-name { font-size: 1.125rem; font-weight: 600; margin-bottom: 0.5rem; }
 .vehicle-stats-block p { color: var(--secondary-text); margin-bottom: 0.25rem; }
+
 .activity-feed { margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
 .activity-item {
     display: flex; justify-content: space-between; align-items: center;
@@ -133,6 +141,26 @@ $recent_logs_stmt->close();
 .activity-date { font-size: 0.875rem; color: var(--secondary-text); }
 .activity-cost { font-size: 1.125rem; font-weight: 600; color: var(--primary-color); }
 .card .btn { margin-top: 1.5rem; }
+
+.stat-highlight {
+    background-color: #f3f4f6;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    margin: 1rem 0;
+}
+.stat-value {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+.stat-label {
+    display: block;
+    font-size: 0.875rem; 
+    color: var(--secondary-text);
+    margin-top: 0.25rem;
+}
 </style>
 
 <?php include 'layout_footer.php'; ?>
