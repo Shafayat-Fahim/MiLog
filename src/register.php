@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="auth-container">
         <div class="auth-card">
-            <h1 class="auth-title">Create Account</h1>
+            <h1 class="auth-title">Create MiLog Account</h1>
             <?php if (!empty($error_message)): ?>
                 <div class="message error-message"><?= $error_message ?></div>
             <?php endif; ?>
