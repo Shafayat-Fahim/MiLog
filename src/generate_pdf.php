@@ -37,7 +37,7 @@ class PDF extends FPDF
     {
         global $vehicle_name, $model_year;
         $this->SetFont('Arial', 'B', 16);
-        $this->Cell(0, 10, 'Fuel Log Report', 0, 1, 'C');
+        $this->Cell(0, 10, 'Fuel Log Report by MiLog', 0, 1, 'C');
         $this->SetFont('Arial', '', 12);
         $this->Cell(0, 10, $vehicle_name . ' (' . $model_year . ')', 0, 1, 'C');
         $this->Ln(10);
